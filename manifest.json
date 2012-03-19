@@ -1,0 +1,17 @@
+{
+  "name": "rfc to tools",
+  "version": "1.0",
+  "description": "Converts http://www.ietf.org/ to http://tools.ietf.org/html/.",
+"background_page": "ietf.html",
+"content_scripts": [
+  {
+    "matches": ["http://*/*"],
+    "js": ["ietf.js"]
+  }
+],
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "permissions": [
+    "tabs", "http://*.ietf.org/", "https://*.ietf.org/" ]
+}
