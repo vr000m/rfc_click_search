@@ -1,17 +1,19 @@
 {
-  "name": "rfc to tools",
-  "version": "1.0",
-  "description": "Converts http://www.ietf.org/ to http://tools.ietf.org/html/.",
-"background_page": "ietf.html",
-"content_scripts": [
-  {
-    "matches": ["http://*/*"],
-    "js": ["ietf.js"]
-  }
-],
-  "browser_action": {
-    "default_icon": "icon.png"
-  },
-  "permissions": [
-    "tabs", "http://*.ietf.org/", "https://*.ietf.org/" ]
+    "name": "rfc to tools",
+    "version": "2.0",
+    "manifest_version": 2,
+    "description": "Converts non-HTML IETF links to HTML-ized IETF links 
+                    (for RFCs and drafts). Also if you select an RFC number/
+                    draft name on a webpage and click the extension, it
+                    will try to open it.",
+    "background": {"page": "ietf.html"},
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["chrome.js"]
+    }],
+    "browser_action": {
+        "default_icon": "icon.png"
+    },
+    "permissions": ["tabs", "http://*.ietf.org/", "https://*.ietf.org/"  ],
+    "incognito": "split"
 }
