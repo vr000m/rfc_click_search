@@ -1,6 +1,7 @@
 var url_ietf = /www.ietf.org\//;
 var url_dc = /www.rfc-editor.org\//;
 //var url_tools_ietf = /tools.ietf.org\//;
+var base_url = "https://tools.ietf.org/html/"
 
 function updateUrl(tab) {
     if (tab.url.match(url_ietf) || tab.url.match(url_dc))
@@ -9,10 +10,11 @@ function updateUrl(tab) {
         var tabUrl = tab.url;
         var path = tabUrl.split("/");
         var xrfc = path[path.length - 1]; 
-        //should be 4 => http://*/id/?.txt
+        // 4 => http://*/id/?.txt
+        // 5 => https://*/id/?.txt
         xrfc = xrfc.split(".");
         var rfc = xrfc[0];
-        var newurl = "https://tools.ietf.org/html/" + rfc;
+        var newurl = base_url + rfc;
         //var newurl = tab.url.replace(url_ietf, url_tools_ietf);
         chrome.tabs.update(tab.id, {
             url: newurl
@@ -37,8 +39,8 @@ function sendServiceRequest(selectedText) {
     if (selectedText == "") return 0;
     if (!isNaN(selectedText)) {
         //if it is just a number it is prolly an RFC number...
-        //is the number valid? as in we know what is the highest rfc number
-        serviceCall = 'http://tools.ietf.org/html/rfc' + selectedText;
+        //is the number valid? as in do we know what is the highest rfc number?
+        serviceCall = base_url+'rfc' + selectedText;
     } else {
         //remove all spaces 
         //selectedText=selectedText.replace(/ /g,"");
@@ -86,7 +88,7 @@ function sendServiceRequest(selectedText) {
                     url: googleURL
                 });
             }
-            serviceCall = 'http://tools.ietf.org/html/' + selectedText;
+            serviceCall = base_url + selectedText;
         } else {
             /*
                 Test Vectors:
@@ -103,7 +105,7 @@ function sendServiceRequest(selectedText) {
             //is it possible that we still have some crap?
             selectedText = selectedText.match(/[0-9]+/g);
             selectedText = 'rfc' + selectedText[0];
-            serviceCall = 'http://tools.ietf.org/html/' + selectedText;
+            serviceCall = base_url + selectedText;
         }
     }
     chrome.tabs.create({
